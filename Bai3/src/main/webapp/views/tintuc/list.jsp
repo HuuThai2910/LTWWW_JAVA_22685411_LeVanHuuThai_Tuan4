@@ -16,33 +16,39 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             margin: 0 auto;
             width: 1170px;
             padding: 20px;
         }
+
         h1 {
             text-align: center;
             margin-bottom: 30px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             border-radius: 6px;
             border: 2px solid black;
         }
+
         th, td {
             padding: 15px;
             text-align: center;
             border: 2px solid black;
         }
+
         select {
             padding: 5px 100px;
             border: 2px solid black
         }
-       h2 a {
-           font-size: 20px;
-       }
+
+        h2 a {
+            font-size: 20px;
+        }
 
     </style>
 </head>
@@ -51,13 +57,15 @@
 
 <div style="display: flex;  justify-content: space-between;">
     <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 50px; gap: 30px">
-        <h2>Mã Danh Mục:</h2>
+        <h2>Danh Mục:</h2>
         <form action="tintucs" method="get">
-            <input type="hidden" name = "action" value="list">
+            <input type="hidden" name="action" value="list">
             <select name="maDanhMuc" onchange="this.form.submit()">
-                <option value="-1" ${param.maDanhMuc == "-1" ? 'selected' : ''}>Tất cả</option>
-                <c:forEach var="i" begin="1" end="5">
-                    <option value="${i}" ${param.maDanhMuc == i ? 'selected' : ''}>${i}</option>
+                <option value="-1" ${param.maDanhMuc == "-1" ? 'selected' : ''}>
+                    Tất cả
+                </option>
+                <c:forEach var="danhMuc" items="${danhMucs}">
+                    <option value="${danhMuc.maDanhMuc}" ${param.maDanhMuc == danhMuc.maDanhMuc ? 'selected' : ''}>${danhMuc.tenDanhMuc}</option>
                 </c:forEach>
             </select>
         </form>
@@ -66,7 +74,8 @@
 </div>
 <table border="1">
     <c:if test="${empty tinTucs}">
-        <h2 style="text-align: center">Danh mục này hiện chưa có tin tức nào</h2>
+        <h2 style="text-align: center">Danh mục này hiện chưa có tin tức
+            nào</h2>
     </c:if>
     <c:if test="${not empty tinTucs}">
         <tr>
@@ -95,7 +104,8 @@
                         ${tinTuc.noiDungTinTuc}
                 </td>
                 <td>
-                    <a href="${tinTuc.lienKet}" target="_blank">${tinTuc.lienKet}</a>
+                    <a href="${tinTuc.lienKet}"
+                       target="_blank">${tinTuc.lienKet}</a>
                 </td>
             </tr>
         </c:forEach>

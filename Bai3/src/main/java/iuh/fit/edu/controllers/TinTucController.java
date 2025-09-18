@@ -41,6 +41,8 @@ public class TinTucController extends HttpServlet {
             action = "";
         if(action.equals("list"))
             handleShowListTinTuc(req, resp);
+        if(action.equals("add-form"))
+            handleShowFormAdd(req, resp);
         else
             handleShowManage(req, resp);
 
@@ -60,9 +62,10 @@ public class TinTucController extends HttpServlet {
     private void handleShowListTinTuc(HttpServletRequest req, HttpServletResponse resp){
         try(EntityManager entityManager = EntityManagerFactoryUtil.getEntityManager()){
             TinTucDao tinTucDao = new TinTucDAOImpl(entityManager);
+            DanhMucDAO danhMucDAO = new DanhMucDAOImpl(entityManager);
             List<TinTuc> tinTucs = new ArrayList<>();
+            List<DanhMuc> danhMucs = danhMucDAO.findAll();
             String maDanhMuc = req.getParameter("maDanhMuc");
-            System.out.println(maDanhMuc);
             if(maDanhMuc == null || "-1".equals(maDanhMuc)){
                 tinTucs = tinTucDao.findAll();
             }else {
@@ -70,6 +73,7 @@ public class TinTucController extends HttpServlet {
             }
 
             req.setAttribute("tinTucs", tinTucs);
+            req.setAttribute("danhMucs", danhMucs);
             RequestDispatcher dispatcher = req.getRequestDispatcher("views/tintuc/list.jsp");
             dispatcher.forward(req, resp);
         }catch (Exception e){
@@ -89,13 +93,25 @@ public class TinTucController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+    private void handleShowFormAdd(HttpServletRequest req, HttpServletResponse resp){
+        try(EntityManager entityManager = EntityManagerFactoryUtil.getEntityManager()) {
+            DanhMucDAO danhMucDAO = new DanhMucDAOImpl(entityManager);
+            List<DanhMuc> danhMucs = danhMucDAO.findAll();
+            req.setAttribute("danhMucs", danhMucs);
+            req.getRequestDispatcher("views/tintuc/add.jsp").forward(req, resp);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 //    Hàm thêm tin tức mới
     private void handleAddTinTuc(HttpServletRequest req, HttpServletResponse resp){
         try(EntityManager entityManager = EntityManagerFactoryUtil.getEntityManager()){
             TinTucDao tinTucDao = new TinTucDAOImpl(entityManager);
             DanhMucDAO danhMucDAO = new DanhMucDAOImpl(entityManager);
-
+            List<DanhMuc> danhMucs = danhMucDAO.findAll();
             String maTinTuc = req.getParameter("maTinTuc");
             String tieuDe = req.getParameter("tieuDe");
             String lienKet = req.getParameter("lienKet");
@@ -116,6 +132,7 @@ public class TinTucController extends HttpServlet {
             if(!violations.isEmpty()){
                 req.setAttribute("errors", violations);
                 req.setAttribute("tinTuc", tinTucNew);
+                req.setAttribute("danhMucs", danhMucs);
                 req.getRequestDispatcher("views/tintuc/add.jsp").forward(req, resp);
             }
             if(tinTucDao.save(tinTucNew) != null){

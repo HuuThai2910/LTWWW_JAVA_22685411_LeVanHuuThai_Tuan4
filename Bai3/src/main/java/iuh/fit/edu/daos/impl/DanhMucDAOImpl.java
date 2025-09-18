@@ -8,6 +8,8 @@ import iuh.fit.edu.entities.DanhMuc;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 /*
  * @description
  * @author: Huu Thai
@@ -24,6 +26,16 @@ public class DanhMucDAOImpl implements iuh.fit.edu.daos.DanhMucDAO {
             DanhMuc danhMuc = entityManager.find(DanhMuc.class, id);
             return danhMuc;
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public List<DanhMuc> findAll(){
+        try {
+            return entityManager.createQuery("Select d from DanhMuc d", DanhMuc.class)
+                    .getResultList();
+        }catch (Exception e){
             e.printStackTrace();
         }
         return null;

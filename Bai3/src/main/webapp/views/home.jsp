@@ -46,7 +46,7 @@
      style="width: 100%; height: 150px; object-fit: cover">
      <header class="navbar" style="">
          <a href="${pageContext.request.contextPath}/tintucs?action=list&maDanhMuc=-1">Danh sách tin tức</a>
-         <a href="tintuc/add.jsp">Thêm tin tức mới</a>
+         <a href="${pageContext.request.contextPath}/tintucs?action=add-form">Thêm tin tức mới</a>
          <a href="${pageContext.request.contextPath}/tintucs?action=manage">Chức năng quản lý</a>
      </header>
  <footer>

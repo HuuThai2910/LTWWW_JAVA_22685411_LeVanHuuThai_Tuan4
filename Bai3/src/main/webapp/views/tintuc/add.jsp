@@ -32,9 +32,10 @@
             background: #fff;
             padding: 25px 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: 50%;
         }
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
@@ -89,11 +90,12 @@
 <div class="container">
     <h1>Thêm tin tức mới</h1>
 
-    <form action="${pageContext.request.contextPath}/tintucs" method="post">
+    <form action="tintucs" method="post">
         <!-- Mã Tin Tức -->
         <div>
             <label>Mã Tin Tức</label>
-            <input type="text" name="maTinTuc" value="${tinTuc.maTinTuc}" placeholder="Mã Tin Tức" />
+            <input type="text" name="maTinTuc" value="${tinTuc.maTinTuc}"
+                   placeholder="Mã Tin Tức"/>
             <c:forEach var="err" items="${errors}">
                 <c:if test="${err.propertyPath == 'maTinTuc'}">
                     <span style="color:red">${err.message}</span>
@@ -104,7 +106,8 @@
         <!-- Tiêu đề -->
         <div>
             <label>Tiêu Đề</label>
-            <input type="text" name="tieuDe" value="${tinTuc.tieuDe}" placeholder="Tiêu Đề" />
+            <input type="text" name="tieuDe" value="${tinTuc.tieuDe}"
+                   placeholder="Tiêu Đề"/>
             <c:forEach var="err" items="${errors}">
                 <c:if test="${err.propertyPath == 'tieuDe'}">
                     <span style="color:red">${err.message}</span>
@@ -115,7 +118,8 @@
         <!-- Liên kết -->
         <div>
             <label>Liên Kết</label>
-            <input type="text" name="lienKet" value="${tinTuc.lienKet}" placeholder="Liên Kết"/>
+            <input type="text" name="lienKet" value="${tinTuc.lienKet}"
+                   placeholder="Liên Kết"/>
             <c:forEach var="err" items="${errors}">
                 <c:if test="${err.propertyPath == 'lienKet'}">
                     <span style="color:red">${err.message}</span>
@@ -126,7 +130,7 @@
         <!-- Nội dung -->
         <div>
             <label>Nội dung</label>
-            <textarea name="noiDung" rows="5" >${tinTuc.noiDungTinTuc}</textarea>
+            <textarea name="noiDung" rows="5">${tinTuc.noiDungTinTuc}</textarea>
             <c:forEach var="err" items="${errors}">
                 <c:if test="${err.propertyPath == 'noiDungTinTuc'}">
                     <span style="color:red">${err.message}</span>
@@ -136,9 +140,11 @@
 
         <!-- Mã Danh Mục -->
         <div>
-            <label>Mã Danh Mục</label>
+            <label>Danh Mục</label>
             <select name="maDanhMuc">
-                <c:forEach var = "i" begin="1" end = "5"> <option value="${i}">${i}</option> </c:forEach>
+                <c:forEach var="danhMuc" items="${danhMucs}">
+                    <option value="${danhMuc.maDanhMuc}">${danhMuc.tenDanhMuc}</option>
+                </c:forEach>
             </select>
         </div>
 

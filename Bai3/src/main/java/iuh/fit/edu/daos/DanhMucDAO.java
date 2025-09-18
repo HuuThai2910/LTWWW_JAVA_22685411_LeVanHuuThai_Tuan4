@@ -11,6 +11,10 @@ package iuh.fit.edu.daos;/*
 
 import iuh.fit.edu.entities.DanhMuc;
 
+import java.util.List;
+
 public interface DanhMucDAO {
     DanhMuc findById(Long id);
+
+    List<DanhMuc> findAll();
 }
